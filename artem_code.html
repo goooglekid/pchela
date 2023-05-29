@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+	<body>
+		<p id="main">
+   		</p>
+
+		<input type="text" id = "tex" name ="name" placeholder="Имя"><br /> 
+		<input type="button" value="Вход" id = "joe" onclick = "end()">
+	</body>
+<script>
+	function makeRadioButton(name, value, text) {
+    		var label = document.createElement("label");
+    		var radio = document.createElement("input");
+    		radio.type = "radio";
+    		radio.name = name;
+    		radio.value = value;
+    		label.appendChild(radio);
+    		label.appendChild(document.createTextNode( text ) );
+    		return label;
+  	}
+	function end(){
+		var inputVal = document.getElementById("tex").value;
+		let tag1 = document.getElementById("main");
+
+		let qer = new XMLHttpRequest();
+		qer.open ("GET", "http://127.0.0.1:8000/persons");
+		qer.responseType = "json";
+		qer.onload = () =>
+		{
+			if (qer.status == 200)
+		{
+				var a = 0;
+				console.log(qer.response);
+				let tag1 = document.getElementById("main");
+  				count = qer.response.length;
+     				for ( i = 0; i < count; i++)
+  				{
+					if (inputVal == qer.response[i].name)
+					a = 1;
+   				}
+				if (a=='1')
+				{
+					tag1.innerHTML = tag1.innerHTML + "Вас зовут: " + inputVal + "<br />";
+				}
+				if (a=='0')
+				{
+					document.location.assign("http://127.0.0.1:8000/error.html");
+				}
+				
+		}
+		}
+		qer.send();		
+
+		var elem = document.getElementById('tex');
+        	elem.parentNode.removeChild(elem);
+		elem = document.getElementById('joe');
+		elem.parentNode.removeChild(elem);
+//----------------------------------------------------------------------------------
+			let req = new XMLHttpRequest();
+			req.open ("GET", "http://127.0.0.1:8000/books");
+			req.responseType = "json";
+			req.onload = () =>
+			{
+				if (qer.status == 200)
+			{
+			console.log(req.response);
+  			count = req.response.length;
+     			for ( i = 0; i < count; i++)
+  			{
+				var yes_button = makeRadioButton( "books", req.response[i].id_person, req.response[i].name );
+  				tag1.appendChild(yes_button);
+     				tag1.innerHTML = tag1.innerHTML + "<br />";	
+   			}
+	}		
+	}
+	req.send();
+//---------------------------------------------------------------------------------------
+	const button = document.createElement('button')
+ 	button.innerText = 'Проверить'
+	button.addEventListener('click', () => {
+	Check();   			})
+	document.body.appendChild(button);
+}
+//---------------------------------------------------------------------------------------------
+	function Person(numb){		
+		let qer = new XMLHttpRequest();
+		qer.open ("GET", "http://127.0.0.1:8000/persons");
+		qer.responseType = "json";
+		qer.onload = () =>
+		{
+			if (qer.status == 200)
+		{
+			console.log(qer.response);
+			let tag1 = document.getElementById("main");
+ 			var butt = numb;
+  			count = qer.response.length;
+     			for ( i = 0; i < count; i++)
+  			{
+				var pers = qer.response[i].id;
+				if (pers == numb)
+				{
+     					alert( "книгу взял: "+qer.response[i].name + " из " + qer.response[i].city  );
+				}
+				
+   			}
+			if (numb == 0 )
+			{
+     				alert( "книга свободна" );
+			}
+	}		
+	}
+	qer.send();
+	}
+	function Check() {
+  		var rad=document.getElementsByName('books');
+  		for (var i=0;i<rad.length; i++) {
+   		 if (rad[i].checked) {
+			var butt = rad[i].value;
+			Person(butt);	
+    				}
+  		}
+	}
+
+
+
+
+</script>
+</html>
