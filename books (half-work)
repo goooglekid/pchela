@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+	<html>
+		<body>
+			<p id = "main">
+			</p>
+		</body>
+        <input type="checkbox" name="" checked />
+		<script>
+		    let tag = document.getElementById('main');
+		    let tag2;
+
+		    let req = new XMLHttpRequest();
+		    req.open("GET", "http://127.0.0.1:8000/books");
+		    req.responseType = "json";
+		    req.onload = () =>
+                {
+                    if (req.status == 200){
+            for (i = 1; i < 6; i++){
+
+
+                tag.innerHTML += ('Kniga' + i + ' ' + ' ' + req.response[i - 1].name + '<input type="checkbox" id = "" />' +'<br />' );
+		        console.log(req.response);
+		    }
+		    }
+            }
+
+            req.send();
+		</script>
+	</html>
