@@ -7,6 +7,16 @@
 	<br />
  
  <script>
+function makeRadioButton(name, value, text) {
+    		var label = document.createElement("label");
+    		var radio = document.createElement("input");
+    		radio.type = "radio";
+    		radio.name = name;
+    		radio.value = value;
+    		label.appendChild(radio);
+    		label.appendChild(document.createTextNode( text ) );
+    		return label;
+  	}
 function beginning (){
 
 		let req = new XMLHttpRequest();
@@ -28,34 +38,14 @@ function beginning (){
 			document.location.assign("http://127.0.0.1:8000/page2.html");
       			})
 			document.body.appendChild(button);
-			
-			const button1 = document.createElement('button')
- 			button1.innerText = 'Нормальная библиотека'
-			button1.addEventListener('click', () => {
-			document.location.assign("https://www.rsl.ru/");
-      			})
-			document.body.appendChild(button1);
-
-
-function createRadioElement(name, checked) {
-var radioHtml = '<input type="radio" name="' + name + '"';
-if ( checked ) {
-radioHtml += ' checked="checked"';
-}
-radioHtml += '/>';
-
-var radioFragment = document.createElement('div');
-radioFragment.innerHTML = radioHtml;
-
-return radioFragment.firstChild;
-}
 //-------------------------------------------------------------------------------
      			for ( i = 0; i < count; i++)
   			{
-     				tag1.innerHTML = tag1.innerHTML + req.response[i].id + ". " + req.response[i].name +  "<br />";
-/*createRadioElement(name, checked)*/
+				var bibutton = makeRadioButton( "books", req.response[i].id_person, req.response[i].name );
+  				tag1.appendChild(bibutton);
+     				tag1.innerHTML = tag1.innerHTML + "<br />";	
    			}
-			var elem = document.getElementById('dummy');
+var elem = document.getElementById('dummy');
         		elem.parentNode.removeChild(elem);			
 			
 }		
