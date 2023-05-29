@@ -1,0 +1,57 @@
+<!DOCKTYPE html>
+ <html>
+  <body>
+   <p id="main">
+   </p>
+	<input type="button" id='dummy' value="Добро пожаловать! Выберите пользователя" onclick='beginning()'>
+	<br />
+
+  <script>
+function beginning (){
+
+		let req = new XMLHttpRequest();
+		req.open ("GET", "http://127.0.0.1:8000/books");
+		req.responseType = "json";
+		req.onload = () =>
+		{
+			if (req.status == 200)
+		{
+			console.log(req.response);
+			let tag1 = document.getElementById("main");
+  			count = req.response.length;
+			tag1.innerHTML = "Список литературы" + "<br />";
+//-------------------------------------------------------------------------------
+			const button = document.createElement('button')
+ 			button.innerText = 'Вход'
+			button.id = 'mainButton'
+			button.addEventListener('click', () => {
+			document.location.assign("http://127.0.0.1:8000/page2.html");
+      			})
+			document.body.appendChild(button);
+			
+			const button1 = document.createElement('button')
+ 			button1.innerText = 'Нормальная библиотека'
+			button1.addEventListener('click', () => {
+			document.location.assign("https://www.rsl.ru/");
+      			})
+			document.body.appendChild(button1);
+
+
+
+//-------------------------------------------------------------------------------
+     			for ( i = 0; i < count; i++)
+  			{
+     				tag1.innerHTML = tag1.innerHTML + req.response[i].id_person + ". " + req.response[i].name +  "<br />";
+   			}
+			var elem = document.getElementById('dummy');
+        		elem.parentNode.removeChild(elem);			
+			
+}		
+}
+req.send();
+}
+
+
+  </script>
+  </body>
+ </html>
